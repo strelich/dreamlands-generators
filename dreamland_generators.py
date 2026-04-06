@@ -1,6 +1,6 @@
 import random
-from read_data import *
-from creatures import Creature, Monster
+from read_data import adjective, noun, proper_noun, terrain, locations, feedstock
+from creatures import Creature
 
 
 # Regions

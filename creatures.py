@@ -1,5 +1,5 @@
 import random
-from read_data import *
+from read_data import Dice, feedstock
 
 
 class Creature:
@@ -29,5 +29,6 @@ class Monster:
 	def __str__(self) -> str:
 		return f"{self.essence} {self.form.lower()} (HD {self.hd})\n\tSpecial: {self.special}\n\tAbility: {self.effect}\n"
 	
-for i in range(10):
-	print(Creature())
+if __name__ == "__main__":
+	for i in range(10):
+		print(Creature())

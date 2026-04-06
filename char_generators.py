@@ -1,5 +1,5 @@
 import random
-from read_data import * 
+from read_data import Dice, feedstock, proper_noun
 
 # Define ability scores
 abilities = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA']
@@ -123,7 +123,7 @@ class Character:
 class PC(Character):
 	"""Creates a player character. Inherits from Character class."""
 	def __init__(self, age = None, pronoun = None, culture = None, system = 'Classic', level = 1):
-		super().__init__()
+		super().__init__(age=age, pronoun=pronoun, culture=culture)
 		self.occ_adj = random.choice(feedstock["Occupation_adjective"])
 		self.downfall = random.choice(feedstock["Downfall"])
 		self.system = system

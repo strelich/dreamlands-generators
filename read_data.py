@@ -1,8 +1,10 @@
 import json
 import random
+from pathlib import Path
 
 # Load data from json file
-with open("feedstock.json") as input_file:
+DATA_PATH = Path(__file__).with_name("feedstock.json")
+with DATA_PATH.open(encoding="utf-8") as input_file:
 	feedstock = json.load(input_file)  # data is a dict now
 
 # Make combo lists
