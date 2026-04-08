@@ -187,15 +187,10 @@ class Party():
 			raise ValueError("Party size (n) must be greater than zero!")
 		else:
 			self.n = random.randint(3,6)
-		self.members = []
-		for i in range(self.n):
-			self.members.append(PC())
+		self.members = [PC() for i in range(self.n)]
 
 	def __str__(self):
-		member_names = []
-		for i in range(self.n):
-			member_names.append(str(self.members[i]))
-		return(str(member_names))
+		return str([str(m) for m in self.members])
 
 	def member_descriptions(self) -> list[str]:
 		for i in range(self.n):

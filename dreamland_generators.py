@@ -101,14 +101,10 @@ class AdventureLocation:
 		self.size = random.choices(list(feedstock["Region_sizes"].keys()), weights = (.2, .2, .2, .2, .2))[0]
 		self.happening = str(Happening())
 		self.loc_nums = feedstock["Region_sizes"].get(self.size)
-		self.routes = []
-		for y in range(random.randrange(self.loc_nums[0],self.loc_nums[1])):
-			self.routes.append(Route())
-		self.locations = []
-		for y in range(random.randrange(self.loc_nums[0],self.loc_nums[1])):
-			self.locations.append(Point())
-		for y in range(random.randrange(self.loc_nums[0],self.loc_nums[1])):
-			self.locations.append(Settlement())
+		self.routes = [Route() for _ in range(random.randrange(self.loc_nums[0],self.loc_nums[1]))]
+		self.locations = [Point() for _ in range(random.randrange(self.loc_nums[0],self.loc_nums[1]))]
+		self.settlements = [Settlement() for _ in range(random.randrange(self.loc_nums[0],self.loc_nums[1]))]
+		self.locations = self.locations + self.settlements #TODO: more elegant way to handle?
 
 	def __str__(self):
 		return (
