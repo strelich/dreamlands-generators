@@ -197,9 +197,9 @@ class Party():
 			member_names.append(str(self.members[i]))
 		return(str(member_names))
 
-	def list_members(self):
+	def member_descriptions(self) -> list[str]:
 		for i in range(self.n):
-			print(self.members[i].get_char_desc())
+			return [member.get_char_desc() for member in self.members]
 		
 	def allocate_xp(self, xp):
 		self.xp = int(xp)

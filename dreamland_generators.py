@@ -84,23 +84,19 @@ class Settlement(Point):
 		self.leader = random.choice(feedstock['Leadership'])
 		self.trouble = random.choice(feedstock['Trouble'])
 
-	def full_description(self, md = False):
-		self.md = md
-		self.prefix = "\t\t\t"
-		if self.md:
-			self.prefix = ""
+	def full_description(self):
 		
 		return (
 			f"The {self.name} ({self.size} settlement)"
-			f"\n{self.prefix}{self.people[0].capitalize()}-{self.people[1].lower()}-folk, led by {self.leader.lower()}"
-			f"\n{self.prefix}Contending with {self.trouble.lower()}"
-			f"\n{self.prefix}{str(self.happening).capitalize()}"
+			f"\n{self.people[0].capitalize()}-{self.people[1].lower()}-folk, led by {self.leader.lower()}"
+			f"\nContending with {self.trouble.lower()}"
+			f"\n{str(self.happening).capitalize()}"
 
 		)
 
 # Pulling it all together!
 class AdventureLocation:
-	def __init__(self, md = False):
+	def __init__(self):
 		self.name = str(Region())
 		self.size = random.choices(list(feedstock["Region_sizes"].keys()), weights = (.2, .2, .2, .2, .2))[0]
 		self.happening = str(Happening())
@@ -113,31 +109,23 @@ class AdventureLocation:
 			self.locations.append(Point())
 		for y in range(random.randrange(self.loc_nums[0],self.loc_nums[1])):
 			self.locations.append(Settlement())
-		self.md = md
-		self.headers = ["","\t","\t\t","\t\t\t"]
-		if self.md:
-			self.headers = ["\n# ", "\n## ", "\n### ", "\n  - "]
 
 	def __str__(self):
 		return (
-			f"{self.headers[0]}The {self.name} ({self.size} region)"
+			f"The {self.name} ({self.size} region)"
 	  		f"\n{self.happening}"
 		)
 
-	def list_routes(self):
-		print("\n" + self.headers[1] + "Routes:\n")
-		for i in range(len(self.routes)):
-			print(f"{self.headers[2]}{self.routes[i]}")
+	def route_lines(self) -> list[str]:
+		return [str(route) for route in self.routes]
 
-	def list_points(self):
-		print("\n" + self.headers[1] + "Locations:\n")
-		for i in range(len(self.locations)):
-			print(f"{self.headers[2]}{self.locations[i].full_description()}")
+	def location_lines(self) -> list[str]:
+		return [location.full_description() for location in self.locations]
 
-	def connections(self):
-		print("\n" + self.headers[1] + "Connections:\n")
-		for i in range(len(self.locations)):
+	def connection_lines(self) -> list[str]:
+		lines = []
+		for _ in self.locations:
 			pair = random.sample(self.locations, 2)
 			relation = random.choice(feedstock["Point_relationships"])
-			print(f"{self.headers[2]}{pair[0]} --> {pair[1]} ({relation})")
-			
+			lines.append(f"{pair[0]} --> {pair[1]} ({relation})")
+		return lines

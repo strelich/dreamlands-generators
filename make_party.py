@@ -9,14 +9,16 @@ print(party)
 
 print("\n\nList members")
 
-party.list_members()
+for desc in party.member_descriptions():
+    print(desc)
 
 print("\nAnd some XP...")
 
 
 party.allocate_xp(20000)
 
-party.list_members()
+for desc in party.member_descriptions():
+    print(desc)
 
 print("\n\nPrint out stats")
 
