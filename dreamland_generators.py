@@ -129,3 +129,5 @@ class AdventureLocation:
 			relation = random.choice(feedstock["Point_relationships"])
 			lines.append(f"{pair[0]} --> {pair[1]} ({relation})")
 		return lines
+	
+# 
