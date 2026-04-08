@@ -13,11 +13,11 @@ def get_knave_ability_scores():
 	"""Generates ability scores per Knave 1e (lowest of 3d6, down the line)"""
 	return min(Dice(n=3).roll())
 
-def pick_class(ability_scores):
+def pick_class(ability_scores: dict[str, int]) -> str:
 	"""Pick a class based on highest ability score"""
-	abilities = list(ability_scores.keys())
+	stat_names = list(ability_scores.keys())
 	scores = list(ability_scores.values())
-	highest_ability = abilities[scores.index(max(scores))]
+	highest_ability = stat_names[scores.index(max(scores))]
 
 	if highest_ability == 'STR':
 		pc_class = 'Fighter'
@@ -65,8 +65,7 @@ names_dict = {
 # Pronouns determine which list to pick first name from
 pronouns_dict = {
 	'He': 'Male',
-	'She': 'Female',
-	'They': random.choice(['Male','Female'])
+	'She': 'Female'
 }
 
 class Character:
@@ -85,7 +84,7 @@ class Character:
 			self.pronoun = pronoun
 		else:
 			self.pronoun = random.choices(("He","She","They"), weights = (.45, .45, .10))[0]
-		self.gender = pronouns_dict.get(self.pronoun)
+		self.gender = pronouns_dict.get(self.pronoun, random.choice(['Male', 'Female']))
 		if culture:
 			self.culture = culture
 		else:
@@ -166,8 +165,7 @@ class PC(Character):
 			self.level += 1
 			self.next_lvl_xp = self.next_lvl_xp + self.level * 1000
 			
-		else:
-			return(f"{self.full_name} is Lvl. {self.level}. {self.XP}/{self.next_lvl_xp} to next level.")
+		return(f"{self.full_name} is Lvl. {self.level}. {self.XP}/{self.next_lvl_xp} to next level.")
 
 
 	def get_stats(self):
@@ -182,7 +180,7 @@ class Party():
 	"""
 	def __init__(self, n = int()):
 		if n > 0:
-			self.n = abs(n)
+			self.n = n
 		elif n < 0:
 			raise ValueError("Party size (n) must be greater than zero!")
 		else:
@@ -193,8 +191,7 @@ class Party():
 		return str([str(m) for m in self.members])
 
 	def member_descriptions(self) -> list[str]:
-		for i in range(self.n):
-			return [member.get_char_desc() for member in self.members]
+		return [member.get_char_desc() for member in self.members]
 		
 	def allocate_xp(self, xp):
 		self.xp = int(xp)

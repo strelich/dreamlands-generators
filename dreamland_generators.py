@@ -102,9 +102,9 @@ class AdventureLocation:
 		self.happening = str(Happening())
 		self.loc_nums = feedstock["Region_sizes"].get(self.size)
 		self.routes = [Route() for _ in range(random.randrange(self.loc_nums[0],self.loc_nums[1]))]
-		self.locations = [Point() for _ in range(random.randrange(self.loc_nums[0],self.loc_nums[1]))]
+		self.points = [Point() for _ in range(random.randrange(self.loc_nums[0],self.loc_nums[1]))]
 		self.settlements = [Settlement() for _ in range(random.randrange(self.loc_nums[0],self.loc_nums[1]))]
-		self.locations = self.locations + self.settlements #TODO: more elegant way to handle?
+		self.points = self.points + self.settlements #TODO: more elegant way to handle?
 
 	def __str__(self):
 		return (
@@ -116,12 +116,12 @@ class AdventureLocation:
 		return [str(route) for route in self.routes]
 
 	def location_lines(self) -> list[str]:
-		return [location.full_description() for location in self.locations]
+		return [location.full_description() for location in self.points]
 
 	def connection_lines(self) -> list[str]:
 		lines = []
-		for _ in self.locations:
-			pair = random.sample(self.locations, 2)
+		for _ in self.points:
+			pair = random.sample(self.points, 2)
 			relation = random.choice(feedstock["Point_relationships"])
 			lines.append(f"{pair[0]} --> {pair[1]} ({relation})")
 		return lines
